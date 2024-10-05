@@ -5,6 +5,8 @@
     {
         public PDO $connection;
 
+        public PDOStatement $statement;
+
         public function __construct($config, $username = 'root', $password = '')
         {
             $dsn = 'mysql:host' . http_build_query($config, '', ';');
@@ -14,12 +16,32 @@
             ]);
         }
 
-        public function query($query, $params = []):    PDOStatement
+        public function query($query, $params = [])
         {
-            $statement = $this->connection->prepare($query);
+            $this->statement = $this->connection->prepare($query);
 
-            $statement->execute($params);
+            $this->statement->execute($params);
 
-            return $statement;
+            return $this;
+        }
+
+        public function findOrFail()
+        {
+            $result = $this->find();
+
+            if (!$result) {
+                abort(Response::NOT_FOUND);
+            }
+
+            return $result;
+        }
+
+        public function find()
+        {
+            return $this->statement->fetch();
+        }
+
+        public function findAll() {
+            return $this->statement->fetchAll();
         }
     }
