@@ -1,5 +1,9 @@
 <?php
 
+    namespace core;
+
+    use PDO;
+    use PDOStatement;
 
     class Database
     {
@@ -16,7 +20,7 @@
             ]);
         }
 
-        public function query($query, $params = [])
+        public function query($query, $params = []) : Database
         {
             $this->statement = $this->connection->prepare($query);
 
