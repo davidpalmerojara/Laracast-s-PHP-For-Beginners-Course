@@ -21,3 +21,5 @@
     // DELETE routes
     $router->delete('/note', 'controllers/notes/destroy.php');
 
+    $router->get('/register', 'controllers/registration/create.php');
+
