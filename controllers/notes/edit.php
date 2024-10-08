@@ -6,13 +6,12 @@
 
     $db = App::resolve(Database::class);
 
-    $currentUserId = 1;
     $query = "select * FROM notes WHERE id = :id";
 
 
     $note = $db->query($query, [':id' => $_GET['id']])->findOrFail();
 
-    authorize($note['user_id'] === $currentUserId);
+    authorize($note['user_id'] === $_SESSION['user']['user_id']);
 
 
 

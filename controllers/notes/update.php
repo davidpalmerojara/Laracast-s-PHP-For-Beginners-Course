@@ -7,7 +7,6 @@
 
     $db = App::resolve(Database::class);
 
-    $currentUserId = 1;
 
     // Find the corresponding note from the database based on the provided ID
     $query = "select * FROM notes WHERE id = :id";
@@ -15,7 +14,7 @@
     $note = $db->query($query, [':id' => $_POST['id']])->findOrFail();
 
     // Authorize the user before allowing them to edit the note
-    authorize($note['user_id'] === $currentUserId);
+    authorize($note['user_id'] === $_SESSION['user']['user_id']);
 
     // Validate the form
     $errors = [];

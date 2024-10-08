@@ -5,8 +5,6 @@
     use core\Validator;
 
     $db = App::resolve(Database::class);
-    
-    $currentUserId = 1;
     $errors = [];
 
     if (!Validator::string($_POST['body'], 1, 1000)) {
@@ -18,7 +16,7 @@
     }
 
     $db->query('INSERT INTO notes (user_id, body) VALUES (:user_id, :body)',
-               [':user_id' => $currentUserId, ':body' => $_POST['body']]);
+               [':user_id' => $_SESSION['user']['user_id'], ':body' => $_POST['body']]);
     header("Location: /notes");
     die();
 
