@@ -62,7 +62,7 @@
 
 
 
-                    return require base_path($route['controller']);
+                    return require base_path('http/controllers' . $route['controller']);
                 }
             }
             abort();

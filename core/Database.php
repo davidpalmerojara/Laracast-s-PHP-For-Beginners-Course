@@ -42,7 +42,8 @@
 
         public function find()
         {
-            return $this->statement->fetch();
+            $result = $this->statement->fetch();
+            return gettype($result) === 'boolean' ? [] : $result;
         }
 
         public function findAll() {

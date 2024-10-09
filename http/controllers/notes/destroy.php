@@ -6,10 +6,7 @@
 
     $db = App::resolve(Database::class);
 
-
-
     $query = "DELETE FROM notes WHERE id = :id";
-
 
     $note = $db->query("SELECT * FROM notes WHERE id = :id", [':id' => $_POST['id']])->findOrFail();
 
@@ -17,5 +14,4 @@
 
     $db->query($query, [':id' => $_POST['id']]);
 
-    header("Location: /notes");
-    exit();
+    redirect('/notes');
