@@ -2,6 +2,7 @@
 
     use core\Response;
     use core\Router;
+    use core\Session;
 
     function dd($value)
     {
@@ -46,6 +47,10 @@
     function redirect($route) {
         header('Location: ' . $route);
         exit();
+    }
+
+    function old($key, $default = '') {
+        return Session::get('old')[$key] ?? $default;
     }
 
 

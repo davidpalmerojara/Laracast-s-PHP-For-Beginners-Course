@@ -1,6 +1,7 @@
 <?php
 
     use core\Authenticator;
+    use core\Session;
     use http\forms\RegistrationForm;
 
     $email = $_POST['email'];
@@ -16,8 +17,12 @@
             $auth->register($email, $password);
             redirect('/');
         }
-        $form->setErrors('email', 'Account already exists.');
+        $form->setErrors('register', 'Account already exists.');
     }
 
-    view('registration/create.view.php', ['errors' => $form->getErrors()]);
-    exit();
+    Session::flash('errors', $form->getErrors());
+    Session::flash('old', [
+        'email' => $email,
+    ]);
+
+    redirect('/register');

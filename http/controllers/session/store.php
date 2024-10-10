@@ -1,6 +1,7 @@
 <?php
 
     use core\Authenticator;
+    use core\Session;
     use http\forms\LoginForm;
 
     $email = $_POST['email'];
@@ -16,8 +17,12 @@
         $form->setErrors('email', 'No matching account found for that email and password.');
     }
 
-    view('session/create.view.php', ['errors' => $form->getErrors()]);
-    exit();
+    Session::flash('errors', $form->getErrors());
+    Session::flash('old', [
+        'email' => $email,
+    ]);
+
+    redirect('/login');
 
 
 
