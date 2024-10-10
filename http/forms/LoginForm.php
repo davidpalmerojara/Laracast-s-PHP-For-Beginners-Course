@@ -14,15 +14,15 @@
                 $this->errors['email'] = "Please enter a valid email address.";
             }
 
-            if (!Validator::string($password)) {
-                $this->errors['password'] = "Password does not match.";
-            }
-
             return empty($this->errors);
 
         }
 
         public function getErrors(): array {
             return $this->errors;
+        }
+
+        public function setErrors($field, $message) {
+            $this->errors[$field] = $message;
         }
     }

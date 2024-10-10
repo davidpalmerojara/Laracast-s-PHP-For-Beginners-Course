@@ -8,17 +8,16 @@
 
     $form = new LoginForm();
 
-    if (!$form->validate($email, $password)) {
-        view('session/create.view.php', ['errors' => $form->getErrors()]);
-        exit();
+    if ($form->validate($email, $password)) {
+        if ((new Authenticator)->attempt($email, $password)) {
+            redirect('/');
+            exit();
+        }
+        $form->setErrors('email', 'No matching account found for that email and password.');
     }
 
-    $auth = new Authenticator();
+    view('session/create.view.php', ['errors' => $form->getErrors()]);
+    exit();
 
-    if (!$auth->attempt($email, $password)) {
-        view('session/create.view.php', ['errors' => $auth->getErrors()]);
-        exit();
-    }
 
-    $auth->login(['email' => $auth->getUser()['email'], 'user_id' => $auth->getUser()['id']]);
-    redirect('/');
+
